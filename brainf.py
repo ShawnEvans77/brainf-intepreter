@@ -11,25 +11,21 @@ pointer = 0
 # , = like c getchar(). input 1 character.
 # . = like c putchar(). print 1 character to the console
 
-def main():
-    with open(file_path, "r") as file:
-        program = file.read()
+with open(file_path, "r") as file:
+    program = file.read()
 
-        for character in program:
+    for character in program:
 
-            match character:
-                case '>':
-                    pointer += 1
-                case '<':
-                    pointer -= 1
-                case '+':
-                    array[pointer] += 1
-                case '-':
-                    array[pointer] -= 1
-                case '.':
-                    print(chr(array[pointer]))
-                case ',':
-                    array[pointer] = int(input("enter integer: "))
-
-if __name__ == 'main':
-    main()
+        match character:
+            case '>':
+                pointer += 1
+            case '<':
+                pointer -= 1
+            case '+':
+                array[pointer] += 1
+            case '-':
+                array[pointer] -= 1
+            case '.':
+                print(chr(array[pointer]))
+            case ',':
+                array[pointer] = int(input("enter integer: "))
