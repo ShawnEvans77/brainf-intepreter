@@ -1,39 +1,43 @@
-def execute(code):
-        p = 0
-        i = 0
+import sys
 
-        while i < len(code):
+def execute(program):
+    mem = [0] * 30000
+    p = 0
+    i = 0
 
-            match code[i]:
-                case '>':
-                    p += 1
-                case '<':
-                    p -= 1
-                case '+':
-                    array[p] += 1 if array[p] <= 255 else 255
-                case '-':
-                    array[p] -= 1 if array[p] > 0 else 0
-                case '.':
-                    print(chr(array[p]), end="")
-                case ',':
-                    array[p] = int(input())
-                case '[':
-                    ending_brace = code.index(']')
-                    starting_brace = i
-            
-                    if array[p] == 0:
-                        i = ending_brace 
-                case ']':
-                    if array[p] != 0:
-                        i = starting_brace 
+    while i < len(program):
+        match program[i]:
+            case '>': 
+                p += 1
+            case '<':
+                p -= 1
+            case '+':
+                mem[p] += 1 if mem[p] <= 255 else 255
+            case '-':
+                mem[p] -= 1 if mem[p] > 0 else 0
+            case '[':
+                closed = program.index(']')
+                open = i 
 
-            i = i + 1
+                if mem[p] == 0:
+                    i = closed 
+            case ']':
+                if mem[p] != 0:
+                    i = open 
+            case ',':
+                mem[p] = int(input())
+            case '.':
+                print(chr(mem[p]), end="")
 
-file_path = "program.txt"
-array = [0] * 30000
+        i += 1
 
-with open(file_path, "r") as file:
-    program = file.read()
+def main():
+    file_path = sys.argv[1]
+        
+    with open(file_path, "r") as file:
+        program = file.read()
+
     execute(program)
 
-# print(array[:10])
+if __name__ == '__main__':
+    main()
