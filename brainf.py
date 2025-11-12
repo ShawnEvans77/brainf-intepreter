@@ -1,13 +1,12 @@
+import sys
+
 def execute(program):
     mem = [0] * 30000
     p = 0
     i = 0
 
-    stack = []
     dict = create_map(program)
     reverse_dict = {close : opening for opening, close in dict.items()}
-
-    print(dict)
 
     while i < len(program):
         match program[i]:
@@ -20,16 +19,9 @@ def execute(program):
             case '-':
                 mem[p] -= 1 if mem[p] > 0 else 0
             case '[':
-                stack.append(i)
-
                 if mem[p] == 0:
-                    i = dict[i]
-                    stack.pop()
-        
-            case ']':
-
-                # print(f"the matching brace for closing bracket at index {i} is {stack[-1]}")
-                
+                    i = dict[i]                    
+            case ']':                
                 if mem[p] != 0:  
                     i = reverse_dict[i] - 1
             case ',':
@@ -38,7 +30,6 @@ def execute(program):
                 print(chr(mem[p]), end="")
 
         i += 1
-
 
 def create_map(program): 
     stack = []
@@ -53,21 +44,13 @@ def create_map(program):
 
     return dict
 
-# def main():
-#     file_path = sys.argv[1]
+def main():
+    file_path = sys.argv[1]
         
-#     with open(file_path, "r") as file:
-#         program = file.read()
+    with open(file_path, "r") as file:
+        program = file.read()
 
-#     execute(program)
+    execute(program)
 
-# if __name__ == '__main__':
-#     main()
-
-
-# execute("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
-
-# execute(">++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.")
-
-execute("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
-
+if __name__ == '__main__':
+    main()
