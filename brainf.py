@@ -1,21 +1,36 @@
-import sys
-
 def execute(program):
     mem = [0] * 30000
     p = 0
     i = 0
 
     stack = []
-    loop_map = {}
+    dict = create_map(program)
 
-    for i, c in enumerate(program):
-        match c:
-            case '[':
-                stack.append(i)
-            case ']':
-                loop_map[stack.pop()] = i
+    # while i < len(program):
+    #     match program[i]:
+    #         case '>': 
+    #             p += 1
+    #         case '<':
+    #             p -= 1
+    #         case '+':
+    #             mem[p] += 1 if mem[p] <= 255 else 255
+    #         case '-':
+    #             mem[p] -= 1 if mem[p] > 0 else 0
+    #         case '[':
+    #             open = i
 
-    i = 0
+    #             if mem[p] == 0:
+    #                 i = dict[i] + 1
+                
+    #         case ']':
+    #             if mem[p] != 0:
+    #                 i = open
+    #         case ',':
+    #             mem[p] = int(input())
+    #         case '.':
+    #             print(chr(mem[p]), end="")
+
+    #     i += 1
 
     while i < len(program):
         match program[i]:
@@ -28,20 +43,36 @@ def execute(program):
             case '-':
                 mem[p] -= 1 if mem[p] > 0 else 0
             case '[':
-                open = i
+                stack.append(i)
 
                 if mem[p] == 0:
-                    i = loop_map[i] + 1
+                    i = dict[i] + 1
+
             case ']':
+
                 if mem[p] != 0:
-                    i = open
+                    i = stack.pop() - 1
+            
             case ',':
                 mem[p] = int(input())
             case '.':
                 print(chr(mem[p]), end="")
 
         i += 1
+
+def create_map(program): 
+    stack = []
+    dict = {}
     
+    for i, c in enumerate(program):
+        match c:
+            case '[':
+                stack.append(i)
+            case ']':
+                dict[stack.pop()] = i
+
+    return dict
+
 # def main():
 #     file_path = sys.argv[1]
         
@@ -54,3 +85,5 @@ def execute(program):
 #     main()
 
 execute(">++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.")
+
+# execute("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
