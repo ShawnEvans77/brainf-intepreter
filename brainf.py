@@ -5,32 +5,9 @@ def execute(program):
 
     stack = []
     dict = create_map(program)
+    reverse_dict = {close : opening for opening, close in dict.items()}
 
-    # while i < len(program):
-    #     match program[i]:
-    #         case '>': 
-    #             p += 1
-    #         case '<':
-    #             p -= 1
-    #         case '+':
-    #             mem[p] += 1 if mem[p] <= 255 else 255
-    #         case '-':
-    #             mem[p] -= 1 if mem[p] > 0 else 0
-    #         case '[':
-    #             open = i
-
-    #             if mem[p] == 0:
-    #                 i = dict[i] + 1
-                
-    #         case ']':
-    #             if mem[p] != 0:
-    #                 i = open
-    #         case ',':
-    #             mem[p] = int(input())
-    #         case '.':
-    #             print(chr(mem[p]), end="")
-
-    #     i += 1
+    print(dict)
 
     while i < len(program):
         match program[i]:
@@ -46,19 +23,22 @@ def execute(program):
                 stack.append(i)
 
                 if mem[p] == 0:
-                    i = dict[i] + 1
-
+                    i = dict[i]
+                    stack.pop()
+        
             case ']':
 
-                if mem[p] != 0:
-                    i = stack.pop() - 1
-            
+                # print(f"the matching brace for closing bracket at index {i} is {stack[-1]}")
+                
+                if mem[p] != 0:  
+                    i = reverse_dict[i] - 1
             case ',':
                 mem[p] = int(input())
             case '.':
                 print(chr(mem[p]), end="")
 
         i += 1
+
 
 def create_map(program): 
     stack = []
@@ -84,6 +64,10 @@ def create_map(program):
 # if __name__ == '__main__':
 #     main()
 
-execute(">++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.")
 
 # execute("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
+
+# execute(">++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.")
+
+execute("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
+
