@@ -9,22 +9,9 @@ code = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>
 
 stack = []
 
-# for i, c in enumerate(code):
-#     match c:
-#         case '[':
-#             stack.append(i)
-#         case ']':
-#              print(f"Bracket '[' at index {stack.pop()}'s matching brace ']' can be found at index {i}")
-
-# ending = 0
-
-# for i, c in enumerate(code):
-#     match c:
-#         case '[':
-#             stack.append(i)
-#         case ']':
-#             stack.pop()
-#             ending = i
-
-# print(ending)
-
+for i, c in enumerate(code):
+    match c:
+        case '[':
+            stack.append(i)
+        case ']':
+             print(f"Bracket '[' at index {stack.pop()}'s matching brace ']' can be found at index {i}")
