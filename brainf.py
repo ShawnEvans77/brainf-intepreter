@@ -5,6 +5,18 @@ def execute(program):
     p = 0
     i = 0
 
+    stack = []
+    loop_map = {}
+
+    for i, c in enumerate(program):
+        match c:
+            case '[':
+                stack.append(i)
+            case ']':
+                loop_map[stack.pop()] = i
+
+    i = 0
+
     while i < len(program):
         match program[i]:
             case '>': 
@@ -16,28 +28,29 @@ def execute(program):
             case '-':
                 mem[p] -= 1 if mem[p] > 0 else 0
             case '[':
-                closed = program.index(']')
-                open = i 
+                open = i
 
                 if mem[p] == 0:
-                    i = closed 
+                    i = loop_map[i] + 1
             case ']':
                 if mem[p] != 0:
-                    i = open 
+                    i = open
             case ',':
                 mem[p] = int(input())
             case '.':
                 print(chr(mem[p]), end="")
 
         i += 1
-
-def main():
-    file_path = sys.argv[1]
+    
+# def main():
+#     file_path = sys.argv[1]
         
-    with open(file_path, "r") as file:
-        program = file.read()
+#     with open(file_path, "r") as file:
+#         program = file.read()
 
-    execute(program)
+#     execute(program)
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
+
+execute(">++++++++[<+++++++++>-]<.>++++[<+++++++>-]<+.+++++++..+++.>>++++++[<+++++++>-]<++.------------.>++++++[<+++++++++>-]<+.<.+++.------.--------.>>>++++[<++++++++>-]<+.")
